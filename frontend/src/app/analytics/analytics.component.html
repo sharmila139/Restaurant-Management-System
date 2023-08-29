@@ -1,0 +1,226 @@
+
+<mat-sidenav-container fullscreen>
+    
+    <ul class="ul">
+        <li class="li" style="float:right"><a class="active" href="/login">Log Out</a></li>
+    </ul>
+
+    <mat-sidenav #sidenav  mode="side" class="example-sidenav" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true" (mouseenter)="increase()"
+      (mouseleave)="decrease()">
+      <div class="logomain"></div>
+      <br>
+      <mat-nav-list>
+        <mat-list-item routerLink="/employee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Employees</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/addemployee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>add</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Add Employee</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/ingredient" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>store</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Ingredients</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/item" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>view_list</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Menu</h5>
+            </div>
+        </mat-list-item>
+    
+        <mat-list-item routerLink="/additem" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>add</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Add Item</h5>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/tables" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter'">
+            <mat-icon mat-list-icon>tab</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Tables</h5>
+            </div>
+          </mat-list-item>
+          
+          <mat-list-item routerLink="/order" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter' || role=='Customer'">
+            <mat-icon mat-list-icon>shopping_cart</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Place Order</h5>
+            </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/current" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Current Orders</h5>
+          </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/analytics" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Analytics</h5>
+        </div>
+    </mat-list-item>
+      </mat-nav-list>
+  
+    </mat-sidenav>
+
+<br>
+<h1 class="center">Analytics</h1>
+
+<div >
+    <mat-tab-group mat-align-tabs="center">
+
+        <mat-tab class="tab" label="Popular Dishes">
+          <br>
+          <h1> Popular Dishes </h1>
+
+          <form [formGroup]="dayKForm" class="form" (ngSubmit)="getTopdishesbyDay()" >
+            <br> <br>
+            <div class="sign-up-htm">
+
+                <div class="group">
+                <label for="pass" class="label" ><strong>Day</strong></label>
+                                    <select id="pass" name="pass" class="input" formControlName="day">
+                                       
+                                        <option value=0>Sunday</option>
+                                        <option value=1>Monday</option>
+                                        <option value=2>Tuesday</option>
+                                        <option value=3>Wednesday</option>
+                                        <option value=4>Thursday</option>
+                                        <option value=5>Friday</option>
+                                        <option value=6>saturday</option>
+                                    </select> 
+                
+                </div>
+                <br>
+                  <label for="user" ><strong>K-value </strong>              </label>
+                  
+                  <input id="user" type="number" class="input" formControlName="k">
+                  <br>
+                  <br>
+
+                  <div>
+                    <strong>
+                    <input type="submit" class="button" [disabled]="!dayKForm.valid" value="Get">
+                  </strong>
+                  </div>
+              </div>
+            </form>
+
+                <br>
+
+<div  *ngIf="topdayKdishes" allign="right">
+            
+    <table mat-table [dataSource]="topdayKdishes" class="mat-elevation-z8" width="80%" >
+        <ng-container matColumnDef="dish_rank">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Rank </th>
+            <td mat-cell *matCellDef="let item">  {{item.dish_rank}} </td>
+        </ng-container>
+        <ng-container matColumnDef="item_id">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Item Id </th>
+            <td mat-cell *matCellDef="let item"> {{item.item_id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="item_name">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Item Name </th>
+            <td mat-cell *matCellDef="let item"> {{item.item_name}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="topdayKdishescolumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: topdayKdishescolumn;"></tr>
+    </table>
+
+</div>
+      <br><br> <br><br><br>
+
+
+      <form [formGroup]="ingredientKForm" class="form" (ngSubmit)="getTopdishesbyIngredients()" >
+    
+        <div class="sign-up-htm">
+
+          <div class="group"> 
+            <label for="pass" class="label" >Ingredient</label>
+            <select id="pass" name="pass" class="input" formControlName="ingredient">
+                <option *ngFor="let ingr of ingredients" value="{{ ingr }}" >{{ ingr }} </option>
+            </select>
+        </div>
+        <br>
+
+            <div class="group">
+              <label for="user" class="label">K value</label>
+              <input id="user" type="number" class="input" formControlName="k">
+             </div>
+             <br>
+            <div class="group">
+                <input type="submit" class="button" [disabled]="!ingredientKForm.valid" value="Get">
+            </div>
+
+          </div>
+        </form>
+
+            <br>
+
+<div  *ngIf="topingredientKdishes" allign="center">
+        
+<table mat-table [dataSource]="topingredientKdishes" class="mat-elevation-z8" width="80%" >
+    <ng-container matColumnDef="item_id">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Item Id </th>
+        <td mat-cell *matCellDef="let item">  {{item.item_id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="item_name">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Item Name </th>
+        <td mat-cell *matCellDef="let item"> {{item.item_name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ordered_quantity">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Ordered Quantity </th>
+        <td mat-cell *matCellDef="let item"> {{item.ordered_quantity}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="topingredientKdishescolumn"></tr>
+    <tr mat-row *matRowDef="let row; columns: topingredientKdishescolumn;"></tr>
+</table>
+
+</div>
+  <br> <br>
+            
+        </mat-tab>
+
+        
+        <mat-tab class="tab" label="rush hours">
+          <div class="chart-container" style=" display: block;" *ngIf="rush"  >
+            <br> <br>
+            <h2> Rush Hours </h2>
+            <canvas baseChart width="50" height="30"
+                            [data]="lineChartData"
+                            [options]="lineChartOptions"
+                            [type]="lineChartType"
+            ></canvas>
+
+        </div>
+        </mat-tab>
+
+</mat-tab-group>
+ 
+</div>
+
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>

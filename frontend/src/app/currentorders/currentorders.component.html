@@ -1,0 +1,166 @@
+<mat-sidenav-container fullscreen>
+    <ul>
+        <li style="float:right"><a class="active" href="/login">Log Out</a></li>
+    </ul>
+
+    <mat-sidenav #sidenav  mode="side" class="example-sidenav" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true" (mouseenter)="increase()"
+      (mouseleave)="decrease()">
+      <div class="logomain"></div>
+      <br>
+      <mat-nav-list>
+        <mat-list-item routerLink="/employee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Employees</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/addemployee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>add</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Add Employee</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/ingredient" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>store</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Ingredients</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/item" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>view_list</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Menu</h5>
+            </div>
+        </mat-list-item>
+    
+        <mat-list-item routerLink="/additem" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>add</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Add Item</h5>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/tables" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter'">
+            <mat-icon mat-list-icon>tab</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Tables</h5>
+            </div>
+          </mat-list-item>
+          
+          <mat-list-item routerLink="/order" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter' || role=='Customer'">
+            <mat-icon mat-list-icon>shopping_cart</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Place Order</h5>
+            </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/current" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Current Orders</h5>
+          </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/analytics" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Analytics</h5>
+        </div>
+    </mat-list-item>
+  
+      </mat-nav-list>
+  
+    </mat-sidenav>
+  
+    
+    <div class="example-sidenav-content">
+        <mat-icon (click)="sidenav.toggle()" class="sidenav-menu" >menu</mat-icon>
+    </div>
+
+    <br>
+
+    
+<div class="center"><h1> Current Orders </h1></div>
+<br><br>
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h2>Prepared Orders</h2>
+    </mat-panel-title>
+    <mat-panel-description>
+      <!-- This is a summary of the content -->
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+<div class="center"><h2></h2></div>
+<div class="container" *ngFor="let order of prep_orders; let i = index">
+  <br>
+<div class="dropdown">
+    <br>
+    <button  (click)="prep_show_items[i] = !prep_show_items[i];getOrder(order);" [hidden]="prep_show_items[i]" class="dropbtn">{{ order.order_id }} </button>
+      <br>  
+  </div>
+</div>
+<br>
+</mat-expansion-panel>
+
+<br><br>
+
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h2>Offline Orders</h2>
+    </mat-panel-title>
+    <mat-panel-description>
+      <!-- This is a summary of the content -->
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+<div class="center"><h2></h2></div>
+<div class="container" *ngFor="let order of offline_orders; let i = index">
+  <br>
+<div class="dropdown">
+  <br>
+    <button  (click)="offline_show_items[i] = !offline_show_items[i];getOrder(order);" class="dropbtn">{{ order.order_id }} </button>
+    <br>
+  </div>
+</div>
+<br>
+</mat-expansion-panel>
+
+<br><br>
+
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h2>Online Orders</h2>
+    </mat-panel-title>
+    <mat-panel-description>
+      <!-- This is a summary of the content -->
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+<div class="center"><h2></h2></div>
+<div class="container" *ngFor="let order of online_orders; let i = index">
+    <div class="dropdown">
+        <br>
+        <button  (click)="online_show_items[i] = !online_show_items[i];getOrder(order);" [hidden]="online_show_items[i]" class="dropbtn">{{ order.order_id }} </button>
+        <br>
+      </div>
+    </div>
+    <br>
+  </mat-expansion-panel>
+  <br>
+
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>

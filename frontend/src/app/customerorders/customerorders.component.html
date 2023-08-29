@@ -1,0 +1,156 @@
+<mat-sidenav-container fullscreen>
+    
+    <ul class="ul">
+        <li class="li" style="float:right"><a class="active" href="/login">Log Out</a></li>
+    </ul>
+
+    <mat-sidenav #sidenav  mode="side" class="example-sidenav" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true" (mouseenter)="increase()"
+      (mouseleave)="decrease()">
+      <div class="logomain"></div>
+      <br>
+      <mat-nav-list>
+        <mat-list-item routerLink="/employee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Employees</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/addemployee" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>add</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Add Employee</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/ingredient" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>store</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Ingredients</h5>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/item" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>view_list</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Menu</h5>
+            </div>
+        </mat-list-item>
+    
+        <mat-list-item routerLink="/additem" routerLinkActive="active" *ngIf="role=='Manager'">
+            <mat-icon mat-list-icon>add</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Add Item</h5>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/tables" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter'">
+            <mat-icon mat-list-icon>tab</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Tables</h5>
+            </div>
+          </mat-list-item>
+          
+          <mat-list-item routerLink="/order" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter' || role=='Customer'">
+            <mat-icon mat-list-icon>shopping_cart</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Place Order</h5>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item [routerLink]="['/customer/',customer_id]" routerLinkActive="active" *ngIf="role=='Customer'">
+            <mat-icon mat-list-icon>list</mat-icon>
+            <div fxFlex="10"></div>
+            <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+              <h5 class="lead">Orders</h5>
+            </div>
+        </mat-list-item>
+  
+        <mat-list-item routerLink="/current" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Current Orders</h5>
+          </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/analytics" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Analytics</h5>
+        </div>
+    </mat-list-item>
+
+      </mat-nav-list>
+  
+    </mat-sidenav>
+
+    <div class="example-sidenav-content">
+      <mat-icon (click)="sidenav.toggle()" class="sidenav-menu" >menu</mat-icon>
+  </div>
+
+
+<br> <br>
+
+<div *ngIf="incompleteorders" allign="center">
+    <br>
+    <h2>Active Orders</h2>
+
+    <table mat-table [dataSource]="incompleteorders" class="mat-elevation-z8" width="90%" >
+        <ng-container matColumnDef="order_id">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Order Id </th>
+            <td mat-cell *matCellDef="let order">  {{order.order_id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total_cost">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Total Cost </th>
+            <td mat-cell *matCellDef="let order"> {{order.total_cost}} </td>
+        </ng-container>
+        <ng-container matColumnDef="payment_method">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Payment Method </th>
+            <td mat-cell *matCellDef="let order"> {{order.payment_method}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="incomordercolumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: incomordercolumn;"></tr>
+    </table>
+
+    
+</div>
+
+    <br>    
+    <br>
+    <br>
+<div *ngIf="completedorders" allign="center">
+    <br>
+    <h2>Completed Orders</h2>
+
+    <table mat-table [dataSource]="completedorders" class="mat-elevation-z8" width="90%" >
+        <ng-container matColumnDef="order_id">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Order Id </th>
+            <td mat-cell *matCellDef="let order">  {{order.order_id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total_cost">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Total Cost </th>
+            <td mat-cell *matCellDef="let order"> {{order.total_cost}} </td>
+        </ng-container>
+        <ng-container matColumnDef="payment_method">
+            <th mat-header-cell *matHeaderCellDef class="table-header"> Payment Method </th>
+            <td mat-cell *matCellDef="let order"> {{order.payment_method}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="comordercolumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: comordercolumn;"></tr>
+    </table>
+
+    
+</div>
+
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>

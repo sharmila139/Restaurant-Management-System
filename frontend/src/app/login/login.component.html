@@ -1,0 +1,95 @@
+	<br> 
+    <ul class="center">
+      
+	 <li><h1><strong> PARADISE RESTAURANT WELCOMES YOU !! </strong> </h1></li> 
+    </ul>
+
+<div class="bg-img">
+	<br>
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Register</label>
+		<div class="login-form">
+			<form [formGroup]="loginForm" class="form" (ngSubmit)="login()">
+			<div class="sign-in-htm">
+				<br> <br> <br> <br>
+				<div class="group">
+					<label for="pass" class="label">Phone Number</label>
+					<br>
+					<input id="pass" type="text" class="input" formControlName="phone_number" placeholder="eg., (123) 123-4567">
+				</div>
+				<br> <br>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<br>
+					<input id="pass" type="password" class="input" data-type="password" formControlName="password" required
+					minlength="6" maxlength="10" placeholder="min 6 char and max 10 char">
+				</div>
+				<br> <br>
+            <!-- <div class="group">
+                <label for="pass" class="label">Role:</label>
+
+<select id="pass" name="pass" class="input">
+  <option value="Manager">Manager</option>
+  <option value="Chef">Chef</option>
+  <option value="Waiter">Waiter</option>
+  <option value="Delivery Person">Delivery Person</option>
+  <option value="Customer">Customer</option>
+</select>
+            </div> -->
+                <!-- <div class="group">
+					<button type="submit" class="button" > Login</button>  
+				</div> -->
+				<div class="group">
+					<input type="submit" class="button" [disabled]="!loginForm.valid" value="Login">
+				</div>
+			</div>
+		</form>
+
+			<form [formGroup]="registerForm" class="form" (ngSubmit)="addRegister()">
+
+			<div class="sign-up-htm">
+				<div class="group">
+					<label for="user" class="label">Name</label>
+					<input id="user" type="text" class="input" formControlName="name">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Phone Number</label>
+					<input id="pass" type="text" class="input" formControlName="phone_number" placeholder="eg., (123) 123-4567">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" data-type="password" formControlName="password" required
+					minlength="6" maxlength="10" placeholder="min 6 char and max 10 char">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Age</label>
+					<input id="pass" type="number" class="input" formControlName="age">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Locality</label>
+					<input id="pass" type="text" class="input" formControlName="locality" placeholder="">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">City</label>
+					<input id="pass" type="text" class="input" formControlName="city" placeholder="">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">pincode</label>
+					<input id="pass" type="text" class="input" formControlName="pincode" placeholder="eg., 666666">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" [disabled]="!registerForm.valid" value="Register">
+				</div>
+				<div class="group"></div>
+				<div class="group">
+					<a for="tab-2" class="group" href="">Already Member?</a>
+				</div>
+			</div>
+			</form>
+	</div>
+</div>
+</div>
+
+<router-outlet></router-outlet> 

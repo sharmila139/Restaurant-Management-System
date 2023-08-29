@@ -1,0 +1,154 @@
+<mat-sidenav-container fullscreen>
+    
+  <ul class="ul">
+      <li class="li" style="float:right"><a class="active" href="/login">Log Out</a></li>
+  </ul>
+
+  <mat-sidenav #sidenav  mode="side" class="example-sidenav" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true" (mouseenter)="increase()"
+    (mouseleave)="decrease()">
+    <div class="logomain"></div>
+    <br>
+    <mat-nav-list>
+      <mat-list-item routerLink="/employee" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Employees</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/addemployee" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>add</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Add Employee</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/ingredient" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>store</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Ingredients</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/item" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>view_list</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Menu</h5>
+          </div>
+      </mat-list-item>
+  
+      <mat-list-item routerLink="/additem" routerLinkActive="active" *ngIf="role=='Manager'">
+          <mat-icon mat-list-icon>add</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Add Item</h5>
+          </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/tables" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter'">
+          <mat-icon mat-list-icon>tab</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Tables</h5>
+          </div>
+        </mat-list-item>
+        
+        <mat-list-item routerLink="/order" routerLinkActive="active" *ngIf="role=='Manager' || role=='Waiter' || role=='Customer'">
+          <mat-icon mat-list-icon>shopping_cart</mat-icon>
+          <div fxFlex="10"></div>
+          <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+            <h5 class="lead">Place Order</h5>
+          </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/current" routerLinkActive="active" *ngIf="role=='Manager'">
+        <mat-icon mat-list-icon>list</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5 class="lead">Current Orders</h5>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item routerLink="/analytics" routerLinkActive="active" *ngIf="role=='Manager'">
+      <mat-icon mat-list-icon>trending_up</mat-icon>
+      <div fxFlex="10"></div>
+      <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+        <h5 class="lead">Analytics</h5>
+      </div>
+  </mat-list-item>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  
+  <div class="example-sidenav-content">
+      <mat-icon (click)="sidenav.toggle()" class="sidenav-menu" >menu</mat-icon>
+  </div>
+  <!-- //////// -->
+
+
+<br>
+<div class="bg-img">
+  <div class="display">
+    <br>
+<div class="container">
+  
+    <p> Free Tables </p>
+</div>
+<div class="container">
+  <div *ngIf="freeTables.length > 0">
+<table mat-table [dataSource]="freeTables" class="mat-elevation-z8" width="80%">
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Table Id </th>
+      <td mat-cell *matCellDef="let element"> Table No. {{element.id}} </td>
+    </ng-container>
+
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="bookTable(row)" ></tr>
+</table>
+</div>
+</div>
+<br> <br> 
+<div class="container">
+    <p> Booked Tables </p>
+</div>
+<div class="container">
+<div *ngIf="busyTables.length > 0">
+<table mat-table [dataSource]="busyTables" class="mat-elevation-z8" width="80%">
+    
+    <ng-container matColumnDef="position">
+        <!-- <button mat-raised-button> -->
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <!-- </button> -->
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Table Id </th>
+      <td mat-cell *matCellDef="let element"> Table No. {{element.id}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="unBook(row)"></tr>
+</table>
+</div>
+</div>
+<br>
+</div>
+
+</div>
+<br>
+
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>
